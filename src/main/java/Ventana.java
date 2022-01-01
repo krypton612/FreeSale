@@ -19,18 +19,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
 
 public class Ventana extends JFrame {
   public JPanel panel;
-  public JButton salir, iniciar, mostrar, ocultar;
-  public ActionListener one;
-  public Color face = new Color(65,103,178);
+  private JButton salir, iniciar, mostrar, ocultar;
+  private ActionListener one;
+  private Color face = new Color(199,147,22);
   //public Color face = new Color(97,97,97);
-  public Color login = new Color(84,124,188);
+  //private Color login = new Color(84,124,188);
 
-  public Font tipoLetra = new Font("calibri",Font.PLAIN,11);
-  public int par=0;
+  private Color login = new Color(247,217,23);
+  private Font tipoLetra = new Font("calibri",Font.PLAIN,11);
+  private int par=0;
   private String pass;
   private JTextField username;
   private JPasswordField password;
@@ -63,13 +65,13 @@ public class Ventana extends JFrame {
     panel.setLayout(null);
     panel.setBackground(face);
     
-    this.getContentPane().add(panel);;
+    this.getContentPane().add(panel);
   }
   private void colocarLabels(){
 
     // -----------------------------------
     JLabel esquinaIz = new JLabel();
-    esquinaIz.setText("FreeSale");
+    esquinaIz.setText("Pollo Panchita");
     esquinaIz.setBounds(12,2,100,30);
     esquinaIz.setOpaque(true);
     esquinaIz.setFont(tipoLetra);
@@ -121,6 +123,7 @@ public class Ventana extends JFrame {
          @Override
          public void actionPerformed(ActionEvent ae) {
            System.exit(0);
+           //setDefaultCloseOperation(EXIT_ON_CLOSE);
          };
        };
      }
@@ -158,6 +161,8 @@ public class Ventana extends JFrame {
     mostrar = new JButton();
     ocultar = new JButton();
     String comp = "Password";
+    String contra_admin = "admin";
+
     username.setForeground(new Color(170,170,170));
     password.setForeground(new Color(170,170,170));
     password.setEchoChar((char)0);
@@ -237,6 +242,7 @@ public class Ventana extends JFrame {
     MouseListener Jtexts = new MouseListener() {
       @Override
       public void mouseClicked(MouseEvent me) {
+
         pass = "";
         for (int i = 0; i < password.getPassword().length; i++) {
           pass += password.getPassword()[i];
@@ -244,8 +250,10 @@ public class Ventana extends JFrame {
 
         if (username.getText().equals("Email")) {
           username.setText("");
+          username.setForeground(Color.black);
         } else if (pass.equals(comp)){
-          password.setText("");;
+          password.setText("");
+          password.setForeground(Color.black);
         }
 
       }
@@ -295,18 +303,52 @@ public class Ventana extends JFrame {
     iniciar.setFont(new Font("arial",Font.BOLD,15));
     //iniciar.setBorder(BorderFactory.createLineBorder(Color.BLUE));
     
-    username.setBorder(BorderFactory.createLineBorder(new Color(66,92,178), 2, false));
-    password.setBorder(BorderFactory.createLineBorder(new Color(66,92,178), 2, false));
-    iniciar.setBorder(BorderFactory.createLineBorder(new Color(66,92,178), 2, false));
+    username.setBorder(BorderFactory.createLineBorder(new Color(160,113,17), 2, false));
+    password.setBorder(BorderFactory.createLineBorder(new Color(160,113,17), 2, false));
+    iniciar.setBorder(BorderFactory.createLineBorder(new Color(160,113,17), 2, false));
     
     username.setBounds(medio-150, 210, 300, 35);
     password.setBounds(medio-150, 250, 300, 35);
     iniciar.setBounds(medio-150, 310, 300, 35);
     
+
+    // Luego del inicio de sesion
     ActionListener empieza = new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent ae) {
-        JOptionPane.showMessageDialog(null, " Helloooo vamos tu puedes");
+        /*if (username.getText() == "admin") {
+          JOptionPane.showMessageDialog(null, "Admin correcto");
+        }
+        else {
+          JOptionPane.showMessageDialog(null, "Admin incorrecto");
+        }*/
+        pass = "";
+
+        for (int i = 0; i < password.getPassword().length; i++) {
+          pass += password.getPassword()[i];
+        }
+
+        if (username.getText().equals("admin")) {
+
+          if (pass.equals(contra_admin)) {
+
+            setVisible(false);
+            Ventana2 admin_panel = new Ventana2();
+            admin_panel.setVisible(true);
+            admin_panel.setTitle("Panel de Administracion");
+            admin_panel.setResizable(true);
+            
+
+
+          }
+          else {
+            JOptionPane.showMessageDialog(null, "Su contraseña o usuario es incorrecot\nVuelva a intentarlo");
+          }
+        }
+        else {
+          JOptionPane.showMessageDialog(null, "Su contraseña o usuario es incorrecot\nVuelva a intentarlo");
+        }
+      
       }
     };
 
@@ -360,6 +402,7 @@ public class Ventana extends JFrame {
 
     username.addKeyListener(eventoTecla);
     password.addKeyListener(eventoTecla2);
+
     iniciar.addActionListener(empieza);
 
     panel.add(username);
@@ -369,7 +412,7 @@ public class Ventana extends JFrame {
     panel.add(mostrar);
   }
   public void registrarse() {
-    JButton registro = new JButton("Sing Up for FreeSale");
+    JButton registro = new JButton("Sing Up for Chicken");
     JButton recuperar = new JButton("Forgot Password");
 
     // --------------------------
@@ -394,5 +437,5 @@ public class Ventana extends JFrame {
     recuperar.setBounds(medio-70,540,140,20);
     panel.add(registro);
     panel.add(recuperar);
-  }
+   }
 }
